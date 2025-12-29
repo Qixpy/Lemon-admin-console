@@ -97,7 +97,7 @@ export default function HomePage() {
             <img
               src="/logo.png"
               alt="Lemon Console"
-              className="w-20 h-20"
+              className="w-60 h-60"
             />
           </div>
           <h1 className="text-4xl font-bold tracking-tight">Lemon Console</h1>

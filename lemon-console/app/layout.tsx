@@ -17,7 +17,12 @@ export const metadata: Metadata = {
   title: "Lemon Console - Admin & User Dashboard",
   description: "Admin and user dashboard for Lemon API",
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.png?v=2", type: "image/png" },
+    ],
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 
