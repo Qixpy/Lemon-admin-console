@@ -52,7 +52,19 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.error?.message || "Registration failed");
+        // Handle validation errors
+        if (data.error?.code === "invalid_string" || data.error?.validation) {
+          const errors = data.error?.validation || [];
+          if (errors.length > 0) {
+            errors.forEach((err: any) => {
+              toast.error(err.message || "Validation error");
+            });
+          } else {
+            toast.error(data.error?.message || "Registration failed");
+          }
+        } else {
+          toast.error(data.error?.message || "Registration failed");
+        }
         return;
       }
 
@@ -66,11 +78,16 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-6">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl">🍋 Create Account</CardTitle>
-          <CardDescription>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 flex items-center justify-center p-6">
+      <Card className="w-full max-w-md shadow-2xl border-0 dark:border dark:border-slate-700">
+        <CardHeader className="text-center space-y-2 pb-6">
+          <div className="flex justify-center mb-2">
+            <img src="/logo.png" alt="Lemon Console" className="h-12 w-auto" />
+          </div>
+          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+            Create Account
+          </CardTitle>
+          <CardDescription className="text-base">
             Sign up for a new Lemon Console account
           </CardDescription>
         </CardHeader>

@@ -37,10 +37,10 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   const isAdmin = user.role === "ADMIN";
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950">
       {/* Top Bar */}
-      <header className="bg-white dark:bg-slate-800 border-b sticky top-0 z-10">
-        <div className="flex items-center justify-between px-4 py-3">
+      <header className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-b border-indigo-100 dark:border-slate-700 sticky top-0 z-10 shadow-sm">
+        <div className="flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-4">
             <Button
               variant="ghost"
@@ -79,7 +79,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
         <aside
           className={`${
             isSidebarOpen ? "w-64" : "w-0"
-          } bg-white dark:bg-slate-800 border-r transition-all duration-300 overflow-hidden`}
+          } bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-r border-indigo-100 dark:border-slate-700 transition-all duration-300 overflow-hidden shadow-sm`}
         >
           <nav className="p-4 space-y-2">
             <Link href="/dashboard">

@@ -25,8 +25,13 @@ export default function HomePage() {
     status: "checking",
   });
   const [baseUrl, setBaseUrl] = useState<string>("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const checkHealth = useCallback(async () => {
+    setIsRefreshing(true);
+    setApiHealth({ status: "checking" });
+    setDbHealth({ status: "checking" });
+
     try {
       // Check API health
       const healthRes = await fetch("/api/lemon/health");
@@ -52,6 +57,8 @@ export default function HomePage() {
     } catch (error) {
       setApiHealth({ status: "error", message: "Cannot connect to API" });
       setDbHealth({ status: "error", message: "Cannot check database" });
+    } finally {
+      setIsRefreshing(false);
     }
   }, []);
 
@@ -89,19 +96,17 @@ export default function HomePage() {
     apiHealth.status === "healthy" && dbHealth.status === "healthy";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <img
-              src="/logo.png"
-              alt="Lemon Console"
-              className="h-48 w-auto"
-            />
+            <img src="/logo.png" alt="Lemon Console" className="h-48 w-auto drop-shadow-2xl" />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight">Lemon Console</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+            Lemon Console
+          </h1>
+          <p className="text-xl text-muted-foreground">
             Admin & User Dashboard for Lemon API
           </p>
         </div>
@@ -150,8 +155,13 @@ export default function HomePage() {
               </code>
             </div>
 
-            <Button onClick={checkHealth} variant="outline" className="w-full">
-              Refresh Status
+            <Button
+              onClick={checkHealth}
+              variant="outline"
+              className="w-full"
+              disabled={isRefreshing}
+            >
+              {isRefreshing ? "Checking..." : "Refresh Status"}
             </Button>
           </CardContent>
         </Card>
