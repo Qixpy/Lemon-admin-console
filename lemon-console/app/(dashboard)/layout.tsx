@@ -53,7 +53,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
               <img
                 src="/logo.png"
                 alt="Lemon Console"
-                className="w-24 h-24"
+                className="h-16 w-auto"
               />
               <h1 className="text-xl font-bold">Lemon Console</h1>
             </div>

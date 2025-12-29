@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Card,
   CardContent,
@@ -26,23 +26,7 @@ export default function HomePage() {
   });
   const [baseUrl, setBaseUrl] = useState<string>("");
 
-  useEffect(() => {
-    const configuredUrl = process.env.NEXT_PUBLIC_LEMON_API_BASE_URL;
-
-    if (!configuredUrl) {
-      setApiHealth({
-        status: "error",
-        message: "NEXT_PUBLIC_LEMON_API_BASE_URL not configured",
-      });
-      setDbHealth({ status: "error", message: "Cannot check without API URL" });
-      return;
-    }
-
-    setBaseUrl(configuredUrl);
-    checkHealth();
-  }, []);
-
-  const checkHealth = async () => {
+  const checkHealth = useCallback(async () => {
     try {
       // Check API health
       const healthRes = await fetch("/api/lemon/health");
@@ -69,7 +53,23 @@ export default function HomePage() {
       setApiHealth({ status: "error", message: "Cannot connect to API" });
       setDbHealth({ status: "error", message: "Cannot check database" });
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const configuredUrl = process.env.NEXT_PUBLIC_LEMON_API_BASE_URL;
+
+    if (!configuredUrl) {
+      setApiHealth({
+        status: "error",
+        message: "NEXT_PUBLIC_LEMON_API_BASE_URL not configured",
+      });
+      setDbHealth({ status: "error", message: "Cannot check without API URL" });
+      return;
+    }
+
+    setBaseUrl(configuredUrl);
+    checkHealth();
+  }, [checkHealth]);
 
   const StatusIcon = ({ status }: { status: HealthStatus["status"] }) => {
     switch (status) {
@@ -97,7 +97,7 @@ export default function HomePage() {
             <img
               src="/logo.png"
               alt="Lemon Console"
-              className="w-60 h-60"
+              className="h-48 w-auto"
             />
           </div>
           <h1 className="text-4xl font-bold tracking-tight">Lemon Console</h1>
