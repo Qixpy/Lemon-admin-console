@@ -59,7 +59,14 @@ function DashboardContent({
             >
               <Menu className="h-5 w-5" />
             </Button>
-            <h1 className="text-xl font-bold">🍋 Lemon Console</h1>
+            <div className="flex items-center gap-3">
+              <img 
+                src="/lemon-console.png" 
+                alt="Lemon Console" 
+                className="w-8 h-8"
+              />
+              <h1 className="text-xl font-bold">Lemon Console</h1>
+            </div>
           </div>
           
           <div className="flex items-center gap-4">

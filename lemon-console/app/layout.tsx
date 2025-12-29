@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Lemon Console - Admin & User Dashboard",
   description: "Admin and user dashboard for Lemon API",
+  icons: {
+    icon: "/lemon-console - favicon.png",
+  },
 };
 
 export default function RootLayout({
