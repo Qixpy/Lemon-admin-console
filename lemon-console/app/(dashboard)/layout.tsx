@@ -1,31 +1,21 @@
-'use client';
+"use client";
 
-import { AuthProvider, useAuth } from '@/lib/auth-context';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { 
-  LayoutDashboard, 
-  Package, 
-  Shield, 
-  LogOut,
-  Menu
-} from 'lucide-react';
-import { useState } from 'react';
+import { AuthProvider, useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { LayoutDashboard, Package, Shield, LogOut, Menu } from "lucide-react";
+import { useState } from "react";
 
-function DashboardContent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function DashboardContent({ children }: { children: React.ReactNode }) {
   const { user, isLoading, logout } = useAuth();
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     if (!isLoading && !user) {
-      router.push('/auth/login');
+      router.push("/auth/login");
     }
   }, [user, isLoading, router]);
 
@@ -44,7 +34,7 @@ function DashboardContent({
     return null; // Will redirect via useEffect
   }
 
-  const isAdmin = user.role === 'ADMIN';
+  const isAdmin = user.role === "ADMIN";
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
@@ -60,20 +50,20 @@ function DashboardContent({
               <Menu className="h-5 w-5" />
             </Button>
             <div className="flex items-center gap-3">
-              <img 
-                src="/lemon-console.png" 
-                alt="Lemon Console" 
+              <img
+                src="/logo.png"
+                alt="Lemon Console"
                 className="w-8 h-8"
               />
               <h1 className="text-xl font-bold">Lemon Console</h1>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <div className="text-sm">
               <p className="font-medium">{user.email}</p>
               <p className="text-xs text-muted-foreground">
-                {user.role === 'ADMIN' ? 'Administrator' : 'User'}
+                {user.role === "ADMIN" ? "Administrator" : "User"}
               </p>
             </div>
             <Button variant="outline" size="sm" onClick={logout}>
@@ -88,7 +78,7 @@ function DashboardContent({
         {/* Sidebar */}
         <aside
           className={`${
-            isSidebarOpen ? 'w-64' : 'w-0'
+            isSidebarOpen ? "w-64" : "w-0"
           } bg-white dark:bg-slate-800 border-r transition-all duration-300 overflow-hidden`}
         >
           <nav className="p-4 space-y-2">
@@ -98,7 +88,7 @@ function DashboardContent({
                 Dashboard
               </Button>
             </Link>
-            
+
             <Link href="/items">
               <Button variant="ghost" className="w-full justify-start">
                 <Package className="h-4 w-4 mr-2" />
@@ -125,9 +115,7 @@ function DashboardContent({
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
-          {children}
-        </main>
+        <main className="flex-1 p-6">{children}</main>
       </div>
     </div>
   );

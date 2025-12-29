@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "Lemon Console - Admin & User Dashboard",
   description: "Admin and user dashboard for Lemon API",
   icons: {
-    icon: "/lemon-console - favicon.png",
+    icon: "/favicon.png",
   },
 };
 
@@ -33,6 +33,19 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <footer className="border-t py-4 mt-8">
+          <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+            Made by{" "}
+            <a
+              href="https://www.vizrastudio.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground hover:underline"
+            >
+              VizraStudio
+            </a>
+          </div>
+        </footer>
       </body>
     </html>
   );

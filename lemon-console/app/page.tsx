@@ -94,15 +94,13 @@ export default function HomePage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <img 
-              src="/lemon-console.png" 
-              alt="Lemon Console" 
+            <img
+              src="/logo.png"
+              alt="Lemon Console"
               className="w-20 h-20"
             />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight">
-            Lemon Console
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight">Lemon Console</h1>
           <p className="text-muted-foreground">
             Admin & User Dashboard for Lemon API
           </p>

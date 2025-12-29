@@ -1,28 +1,34 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useAuth } from '@/lib/auth-context';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { toast } from 'sonner';
-import { Shield, AlertCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+} from "@/components/ui/select";
+import { toast } from "sonner";
+import { Shield, AlertCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function AdminRolesPage() {
   const { user } = useAuth();
   const router = useRouter();
-  const [userId, setUserId] = useState('');
-  const [role, setRole] = useState<'USER' | 'ADMIN'>('USER');
+  const [userId, setUserId] = useState("");
+  const [role, setRole] = useState<"USER" | "ADMIN">("USER");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastResult, setLastResult] = useState<{
     success: boolean;
@@ -31,22 +37,22 @@ export default function AdminRolesPage() {
   } | null>(null);
 
   useEffect(() => {
-    if (user?.role !== 'ADMIN') {
-      toast.error('Access denied. Admin privileges required.');
-      router.push('/dashboard');
+    if (user?.role !== "ADMIN") {
+      toast.error("Access denied. Admin privileges required.");
+      router.push("/dashboard");
     }
   }, [user, router]);
 
-  if (user?.role !== 'ADMIN') {
+  if (user?.role !== "ADMIN") {
     return null;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const userIdNum = parseInt(userId, 10);
     if (isNaN(userIdNum) || userIdNum <= 0) {
-      toast.error('Please enter a valid user ID');
+      toast.error("Please enter a valid user ID");
       return;
     }
 
@@ -55,8 +61,8 @@ export default function AdminRolesPage() {
 
     try {
       const response = await fetch(`/api/lemon/admin/users/${userIdNum}/role`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role }),
       });
 
@@ -67,12 +73,12 @@ export default function AdminRolesPage() {
           success: true,
           message: `Successfully updated user ${userIdNum} to ${role} role`,
         });
-        toast.success('Role updated successfully');
-        setUserId('');
+        toast.success("Role updated successfully");
+        setUserId("");
       } else {
-        const errorMessage = data.error?.message || 'Failed to update role';
+        const errorMessage = data.error?.message || "Failed to update role";
         const requestId = data.error?.requestId;
-        
+
         setLastResult({
           success: false,
           message: errorMessage,
@@ -81,7 +87,7 @@ export default function AdminRolesPage() {
         toast.error(errorMessage);
       }
     } catch (error) {
-      const errorMessage = 'Failed to connect to server';
+      const errorMessage = "Failed to connect to server";
       setLastResult({
         success: false,
         message: errorMessage,
@@ -135,7 +141,7 @@ export default function AdminRolesPage() {
                 <Label htmlFor="role">New Role</Label>
                 <Select
                   value={role}
-                  onValueChange={(value) => setRole(value as 'USER' | 'ADMIN')}
+                  onValueChange={(value) => setRole(value as "USER" | "ADMIN")}
                   disabled={isSubmitting}
                 >
                   <SelectTrigger id="role">
@@ -152,7 +158,7 @@ export default function AdminRolesPage() {
               </div>
 
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? 'Updating Role...' : 'Update Role'}
+                {isSubmitting ? "Updating Role..." : "Update Role"}
               </Button>
             </form>
           </CardContent>
@@ -161,9 +167,7 @@ export default function AdminRolesPage() {
         <Card>
           <CardHeader>
             <CardTitle>Role Information</CardTitle>
-            <CardDescription>
-              Understanding user roles
-            </CardDescription>
+            <CardDescription>Understanding user roles</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
@@ -188,7 +192,8 @@ export default function AdminRolesPage() {
               <div className="flex items-start gap-2 text-sm text-muted-foreground">
                 <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
                 <p>
-                  Changes take effect immediately. Be careful when assigning ADMIN roles.
+                  Changes take effect immediately. Be careful when assigning
+                  ADMIN roles.
                 </p>
               </div>
             </div>
@@ -197,17 +202,24 @@ export default function AdminRolesPage() {
       </div>
 
       {lastResult && (
-        <Card className={lastResult.success ? 'border-green-500' : 'border-red-500'}>
+        <Card
+          className={lastResult.success ? "border-green-500" : "border-red-500"}
+        >
           <CardHeader>
-            <CardTitle className={lastResult.success ? 'text-green-600' : 'text-red-600'}>
-              {lastResult.success ? 'Success' : 'Error'}
+            <CardTitle
+              className={lastResult.success ? "text-green-600" : "text-red-600"}
+            >
+              {lastResult.success ? "Success" : "Error"}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <p>{lastResult.message}</p>
             {lastResult.requestId && (
               <p className="text-xs text-muted-foreground">
-                Request ID: <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded">{lastResult.requestId}</code>
+                Request ID:{" "}
+                <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded">
+                  {lastResult.requestId}
+                </code>
               </p>
             )}
           </CardContent>
@@ -220,10 +232,21 @@ export default function AdminRolesPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-2 text-sm">
-            <p><strong>Your User ID:</strong> <code className="bg-white dark:bg-slate-800 px-1 rounded">{user.id}</code></p>
-            <p><strong>Your Role:</strong> <code className="bg-white dark:bg-slate-800 px-1 rounded">{user.role}</code></p>
+            <p>
+              <strong>Your User ID:</strong>{" "}
+              <code className="bg-white dark:bg-slate-800 px-1 rounded">
+                {user.id}
+              </code>
+            </p>
+            <p>
+              <strong>Your Role:</strong>{" "}
+              <code className="bg-white dark:bg-slate-800 px-1 rounded">
+                {user.role}
+              </code>
+            </p>
             <p className="text-xs text-muted-foreground mt-2">
-              You can find user IDs in the items list when "Show all users' items" is enabled.
+              You can find user IDs in the items list when "Show all users'
+              items" is enabled.
             </p>
           </div>
         </CardContent>

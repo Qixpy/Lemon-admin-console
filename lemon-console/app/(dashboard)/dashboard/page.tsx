@@ -1,26 +1,30 @@
-'use client';
+"use client";
 
-import { useAuth } from '@/lib/auth-context';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Package, Shield, User } from 'lucide-react';
+import { useAuth } from "@/lib/auth-context";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Package, Shield, User } from "lucide-react";
 
 export default function DashboardPage() {
   const { user } = useAuth();
 
   if (!user) return null;
 
-  const isAdmin = user.role === 'ADMIN';
+  const isAdmin = user.role === "ADMIN";
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Welcome back, {user.email}
-        </p>
+        <p className="text-muted-foreground">Welcome back, {user.email}</p>
       </div>
 
       {/* User Info Card */}
@@ -40,7 +44,7 @@ export default function DashboardPage() {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Role</p>
-              <Badge variant={isAdmin ? 'default' : 'secondary'}>
+              <Badge variant={isAdmin ? "default" : "secondary"}>
                 {user.role}
               </Badge>
             </div>
@@ -60,9 +64,7 @@ export default function DashboardPage() {
               <Package className="h-5 w-5" />
               Items
             </CardTitle>
-            <CardDescription>
-              View and manage your items
-            </CardDescription>
+            <CardDescription>View and manage your items</CardDescription>
           </CardHeader>
           <CardContent>
             <Button asChild className="w-full">

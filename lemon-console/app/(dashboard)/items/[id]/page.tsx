@@ -1,13 +1,19 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { toast } from 'sonner';
-import { ArrowLeft, Calendar, User } from 'lucide-react';
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
+import { ArrowLeft, Calendar, User } from "lucide-react";
+import Link from "next/link";
 
 interface Item {
   id: number;
@@ -33,12 +39,12 @@ export default function ItemDetailPage() {
         if (response.ok && data.success) {
           setItem(data.data.item);
         } else {
-          toast.error(data.error?.message || 'Failed to fetch item');
-          router.push('/items');
+          toast.error(data.error?.message || "Failed to fetch item");
+          router.push("/items");
         }
       } catch (error) {
-        toast.error('Failed to connect to server');
-        router.push('/items');
+        toast.error("Failed to connect to server");
+        router.push("/items");
       } finally {
         setIsLoading(false);
       }
@@ -88,7 +94,9 @@ export default function ItemDetailPage() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">Description</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">
+              Description
+            </h3>
             <p className="text-lg">{item.description}</p>
           </div>
 
@@ -96,7 +104,9 @@ export default function ItemDetailPage() {
             <div className="flex items-start gap-3">
               <User className="h-5 w-5 text-muted-foreground mt-0.5" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Owner ID</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Owner ID
+                </p>
                 <p className="text-sm font-mono">{item.userId}</p>
               </div>
             </div>
@@ -104,16 +114,24 @@ export default function ItemDetailPage() {
             <div className="flex items-start gap-3">
               <Calendar className="h-5 w-5 text-muted-foreground mt-0.5" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Created</p>
-                <p className="text-sm">{new Date(item.createdAt).toLocaleString()}</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Created
+                </p>
+                <p className="text-sm">
+                  {new Date(item.createdAt).toLocaleString()}
+                </p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <Calendar className="h-5 w-5 text-muted-foreground mt-0.5" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Last Updated</p>
-                <p className="text-sm">{new Date(item.updatedAt).toLocaleString()}</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Last Updated
+                </p>
+                <p className="text-sm">
+                  {new Date(item.updatedAt).toLocaleString()}
+                </p>
               </div>
             </div>
           </div>
